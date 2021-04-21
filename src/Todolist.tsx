@@ -28,8 +28,19 @@ type PropsType = {
 
 
 export const Todolist = React.memo(({id, changeFilter, changeTaskTitle, changeTaskStatus, removeTask,
-        addTask,removeTodolist,changeTodolistTitle, ...props}: PropsType) => {
-    console.log('Todolist called')
+        addTask,changeTodolistTitle, ...props}: PropsType) => {
+
+    const add_Task = useCallback((title: string) => {
+        addTask(title, id)
+    }, [addTask, id])
+    const remove_Todolist = () => {
+        props.removeTodolist(id)
+    }
+    const change_TodolistTitle = useCallback((newTitle: string) => {
+        changeTodolistTitle(id, newTitle)
+    }, [id,changeTodolistTitle])
+
+
 
     const onAllClickHandler = useCallback(() => {
         changeFilter('all', id)
@@ -42,27 +53,12 @@ export const Todolist = React.memo(({id, changeFilter, changeTaskTitle, changeTa
     }, [changeFilter, id])
 
 
-    const remove_Todolist = useCallback(() => {
-        removeTodolist(id)
-    }, [removeTodolist, id])
-
-    const change_TodolistTitle = useCallback((newTitle: string) => {
-        changeTodolistTitle(id, newTitle)
-    }, [changeTodolistTitle, id])
-
-    const add_Task = useCallback((title: string) => {
-        addTask(title, id)
-    }, [addTask, id])
-
-
     const onClickHandler = useCallback((taskId: string) => {
         removeTask(taskId, id)
     }, [removeTask, id])
-
     const onChangeStatusHandler = useCallback((taskId: string, isDone: boolean) => {
         changeTaskStatus(taskId, isDone, id)
     }, [changeTaskStatus, id])
-
     const onChangeTitleHandler = useCallback((taskId: string, newValue: string) => {
         changeTaskTitle(taskId, newValue, id)
     }, [changeTaskTitle, id])

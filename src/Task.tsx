@@ -10,16 +10,14 @@ type TaskPropsType = {
     changeTaskTitle: (id: string, newValue: string) => void
     task: TaskType
 }
-export const Task = ({removeTask,changeTaskStatus,changeTaskTitle,task}: TaskPropsType) => {
+export const Task = React.memo(({removeTask,changeTaskStatus,changeTaskTitle,task}: TaskPropsType) => {
 
-    const onClickHandler = useCallback(() => {
-        removeTask(task.id)
-    }, [removeTask,task.id])
+    const onClickHandler = () => {removeTask(task.id)}
 
-    const onChangeStatusHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
         changeTaskStatus(task.id, newIsDoneValue)
-    }, [changeTaskStatus,task.id])
+    }
 
     const onChangeTitleHandler = useCallback((newValue: string) => {
         changeTaskTitle(task.id, newValue)
@@ -32,4 +30,4 @@ export const Task = ({removeTask,changeTaskStatus,changeTaskTitle,task}: TaskPro
         <IconButton onClick={onClickHandler}><Delete/></IconButton>
     </li>
 
-}
+})
