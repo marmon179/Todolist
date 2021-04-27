@@ -41,14 +41,14 @@ export const CreateTodoLists = () => {
                 setState(res.data)
             })
     }
-    return<div>{JSON.stringify(state)}
-            <div>
-                <input value={title} placeholder="title" onChange={(e) => {
-                    setTitle(e.currentTarget.value)
-                }}/>
-                <button onClick={createTodolist}>creat</button>
-            </div>
+    return <div>{JSON.stringify(state)}
+        <div>
+            <input value={title} placeholder="title" onChange={(e) => {
+                setTitle(e.currentTarget.value)
+            }}/>
+            <button onClick={createTodolist}>creat</button>
         </div>
+    </div>
 
 }
 
@@ -56,7 +56,7 @@ export const DeleteTodoLists = () => {
     const [state, setState] = useState<any>(null)
     const [todoListId, setTodoListId] = useState<any>(null)
 
-    const deleteTodolist = () =>{
+    const deleteTodolist = () => {
         todolistApi.deleteTodoList(todoListId)
             .then(res => setState(res.data))
     }
@@ -73,15 +73,29 @@ export const DeleteTodoLists = () => {
 
 export const UpdateTodoListsTitle = () => {
     const [state, setState] = useState<any>(null)
-    useEffect(() => {
-        const todoListId = '714faedb-e8e2-4524-9c16-d469f4b845c7'
-        todolistApi.updateTodoListTitle('Pab', todoListId)
+    const [todoListId, setTodoListId] = useState<any>(null)
+    const [title, setTitle] = useState<any>(null)
+
+    const updateTodolistTitle = () => {
+        todolistApi.updateTodoListTitle(title, todoListId)
             .then((res) => {
                 setState(res.data)
             })
-    }, [])
+    }
+    // useEffect(() => {
+    //     todolistApi.updateTodoListTitle(title, todoListId)
+    //         .then((res) => {
+    //             setState(res.data)
+    //         })
+    // }, [])
     return <div>{JSON.stringify(state)}
-
+        <div>
+            <input value={todoListId} placeholder="todoListId"
+                   onChange={(e) => setTodoListId(e.currentTarget.value)}/>
+            <input value={title} placeholder="title"
+                   onChange={(e) => setTitle(e.currentTarget.value)}/>
+            <button onClick={updateTodolistTitle}>update</button>
+        </div>
     </div>
 }
 
