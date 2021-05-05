@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {AddItemForm} from './AddItemForm';
@@ -7,7 +7,7 @@ import {Menu} from '@material-ui/icons';
 import {
     addTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
+    changeTodolistTitleAC, fetchTodoListsTC,
     FilterValuesType,
     removeTodolistAC, TodoListDomainType
 } from './state/todolists-reducer';
@@ -26,6 +26,10 @@ function App() {
     const todoLists = useSelector<AppRootStateType, Array<TodoListDomainType>>(state => state.todoLists)
     const tasks = useSelector<AppRootStateType, TaskStateType>(state => state.task)
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchTodoListsTC())
+    }, [])
 
     const addTodoList = useCallback((title: string) => {
         dispatch(addTodolistAC(title))
