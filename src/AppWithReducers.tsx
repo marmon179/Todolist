@@ -13,7 +13,7 @@ import {
     removeTodolistAC,
     todoListsReducer
 } from './state/todolists-reducer';
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
+import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from './state/tasks-reducer';
 import {TaskPriorities, TaskStatuses, TaskType} from './api/todolist-api';
 
 
@@ -54,7 +54,12 @@ function App() {
     })
 
     function addTodoList(title: string) {
-        const action = addTodolistAC(title)
+        const action = addTodolistAC({
+            id: v1(),
+            addedDate: '',
+            order: 0,
+            title: title
+        })
         dispatchToTodolist(action)
         dispatchToTasks(action)
     }
@@ -76,26 +81,26 @@ function App() {
 
     function addTask(title: string, todolistId: string) {
         const action = addTaskAC({
-            todoListId:todolistId,
-            title:title,
+            todoListId: todolistId,
+            title: title,
             status: TaskStatuses.New,
             addedDate: '',
-            deadline:'',
+            deadline: '',
             description: '',
             order: 0,
             priority: 0,
             startDate: '',
-            id:'id exists'
+            id: 'id exists'
         })
         dispatchToTasks(action)
     }
 
     function changeStatus(id: string, status: TaskStatuses, todolistId: string) {
-        dispatchToTasks(changeTaskStatusAC(id, status, todolistId))
+        dispatchToTasks(updateTaskAC(id, {status}, todolistId))
     }
 
     function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
-        dispatchToTasks(changeTaskTitleAC(id, newTitle, todolistId))
+        dispatchToTasks(updateTaskAC(id, {title: newTitle}, todolistId))
     }
 
     function removeTask(id: string, todolistId: string) {
