@@ -6,16 +6,18 @@ import {todoListsReducer} from '../features/TodoListsList/Todolist/todolists-red
 import {v1} from 'uuid'
 import {AppRootStateType} from '../app/store'
 import {TaskPriorities, TaskStatuses} from '../api/todolist-api';
+import {appReducer} from '../app/app-reducer';
 
 const rootReducer = combineReducers({
     task: tasksReducer,
-    todoLists: todoListsReducer
+    todoLists: todoListsReducer,
+    app:appReducer
 })
 
 const initialGlobalState = {
     todoLists: [
-        {id: 'todolistId1', title: 'What to learn', filter: 'all', addedDate: '', order: 0},
-        {id: 'todolistId2', title: 'What to buy', filter: 'all', addedDate: '', order: 0}
+        {id: 'todolistId1', title: 'What to learn', filter: 'all',entityStatus:'idle', addedDate: '', order: 0},
+        {id: 'todolistId2', title: 'What to buy', filter: 'all',entityStatus:'loading', addedDate: '', order: 0}
     ],
     task: {
         ['todolistId1']: [
@@ -38,6 +40,10 @@ const initialGlobalState = {
                 startDate: '', deadline: '', addedDate: '', order: 0, priority: TaskPriorities.Low
             },
         ]
+    },
+    app: {
+        error: null,
+        status: 'idle'
     }
 };
 
