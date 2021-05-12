@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
@@ -9,69 +8,7 @@ const instance = axios.create({
     }
 })
 
-export type TodoListType = {
-    id: string
-    title: string
-    addedDate: string
-    order: number
-}
-
-type ResponseType<D = {}> = {
-    resultCode: number
-    messages: Array<string>
-    data: D
-}
-
-export enum TaskStatuses {
-    New = 0,
-    InProgress = 1,
-    Completed = 2,
-    Draft = 3
-}
-
-export enum TaskPriorities {
-    Low = 0,
-    Middle = 1,
-    Hi = 2,
-    Urgently = 3,
-    Later = 3
-}
-
-export type TaskType = {
-    description: string
-    title: string
-    status: TaskStatuses
-    priority: TaskPriorities
-    startDate: string
-    deadline: string
-    id: string
-    todoListId: string
-    order: number
-    addedDate: string
-}
-
-type GetTasksResponse = {
-    error: string | null
-    totalCount: number
-    items: TaskType[]
-}
-
-type ResponseTaskType<D = {}> = {
-    resultCode: number
-    messages: Array<string>
-    data: D
-    item: TaskType
-}
-
-export type UpdateTaskModelType = {
-    title: string
-    description: string
-    status: TaskStatuses
-    priority: TaskPriorities
-    startDate: string
-    deadline: string
-}
-
+//api
 export const todolistApi = {
     getTodoList() {
         return instance.get<Array<TodoListType>>('todo-lists')
@@ -104,4 +41,61 @@ export const todolistApi = {
     deleteTasks(todoListId: string, taskId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todoListId}/tasks/${taskId}`)
     },
+}
+
+//types
+export type TodoListType = {
+    id: string
+    title: string
+    addedDate: string
+    order: number
+}
+type ResponseType<D = {}> = {
+    resultCode: number
+    messages: Array<string>
+    data: D
+}
+export enum TaskStatuses {
+    New = 0,
+    InProgress = 1,
+    Completed = 2,
+    Draft = 3
+}
+export enum TaskPriorities {
+    Low = 0,
+    Middle = 1,
+    Hi = 2,
+    Urgently = 3,
+    Later = 3
+}
+export type TaskType = {
+    description: string
+    title: string
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+    id: string
+    todoListId: string
+    order: number
+    addedDate: string
+}
+type GetTasksResponse = {
+    error: string | null
+    totalCount: number
+    items: TaskType[]
+}
+type ResponseTaskType<D = {}> = {
+    resultCode: number
+    messages: Array<string>
+    data: D
+    item: TaskType
+}
+export type UpdateTaskModelType = {
+    title: string
+    description: string
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
 }
