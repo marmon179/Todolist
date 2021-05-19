@@ -64,7 +64,6 @@ export const fetchTasksTC = (todoListId: string) => (dispatch: Dispatch<ActionsT
             dispatch(setAppStatusAC('succeeded'))
         })
 }
-
 export const removeTaskTC = (taskId: string, todoListId: string) => (dispatch: Dispatch<ActionsType>) => {
     todolistApi.deleteTasks(todoListId, taskId)
         .then(res => {
@@ -72,7 +71,6 @@ export const removeTaskTC = (taskId: string, todoListId: string) => (dispatch: D
             dispatch(action)
         })
 }
-
 export const addTaskTC = (title: string, todoListId: string) => (dispatch: Dispatch<ActionsType | SetAppErrorActionType | SetAppStatusActionType>) => {
     dispatch(setAppStatusAC('loading'))
     todolistApi.createTask(todoListId, title)
@@ -90,7 +88,6 @@ export const addTaskTC = (title: string, todoListId: string) => (dispatch: Dispa
             handleServerNetworkError(error,dispatch)
         })
 }
-
 export const updateTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelType, todoListId: string) => {
     return (dispatch: ThunkDispatch, getState: () => AppRootStateType) => {
 
